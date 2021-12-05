@@ -15,8 +15,8 @@ func Check(e error) {
 	}
 }
 
-func ConvertToInt(line string) int {
-	result, err := strconv.Atoi(line)
+func ConvertToInt(s string) int {
+	result, err := strconv.Atoi(s)
 	Check(err)
 	return result
 }
