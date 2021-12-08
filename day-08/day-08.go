@@ -24,28 +24,26 @@ func puzzle2(input []string) (result int) {
 	for _, entry := range input {
 		patterns, output := parseEntry(entry)
 
-		one := patterns[0]
-		seven := patterns[1]
-		four := patterns[2]
-		eight := patterns[9]
-		nine := getNine(patterns)
-		three := getThree(patterns, nine)
-		five := getFive(patterns, nine)
-		two := getTwo(patterns, three, five)
-		six := getSix(patterns, five, nine)
-		zero := getZero(patterns, six, nine)
+		one, seven, four, eight := patterns[0], patterns[1], patterns[2], patterns[9]
+		nine := find(patterns, func(p string) bool { return contains(p, seven) && contains(p, four) && p != eight })
+		three := find(patterns, func(p string) bool { return contains(p, seven) && contains(nine, p) && p != seven })
+		five := find(patterns, func(p string) bool { return !contains(p, one) && contains(nine, p) })
+		two := find(patterns, func(p string) bool { return len(p) == 5 && p != three && p != five })
+		six := find(patterns, func(p string) bool { return len(p) == 6 && contains(p, five) && p != nine })
+		zero := find(patterns, func(p string) bool { return len(p) == 6 && p != six && p != nine })
 
-		numbers := make(map[string]int, 10)
-		numbers[sortString(zero)] = 0
-		numbers[sortString(one)] = 1
-		numbers[sortString(two)] = 2
-		numbers[sortString(three)] = 3
-		numbers[sortString(four)] = 4
-		numbers[sortString(five)] = 5
-		numbers[sortString(six)] = 6
-		numbers[sortString(seven)] = 7
-		numbers[sortString(eight)] = 8
-		numbers[sortString(nine)] = 9
+		numbers := map[string]int{
+			sortString(zero):  0,
+			sortString(one):   1,
+			sortString(two):   2,
+			sortString(three): 3,
+			sortString(four):  4,
+			sortString(five):  5,
+			sortString(six):   6,
+			sortString(seven): 7,
+			sortString(eight): 8,
+			sortString(nine):  9,
+		}
 
 		for i, v := range output {
 			result += numbers[sortString(v)] * int(math.Pow(10, 3-float64(i)))
@@ -63,33 +61,9 @@ func parseEntry(entry string) ([]string, []string) {
 	return patterns, strings.Fields(split[1])
 }
 
-func getNine(patterns []string) string {
-	return find(patterns, func(p string, i int) bool { return contains(p, patterns[1]) && contains(p, patterns[2]) && i != 9 })
-}
-
-func getThree(patterns []string, nine string) string {
-	return find(patterns, func(p string, i int) bool { return contains(p, patterns[1]) && contains(nine, p) && i != 1 })
-}
-
-func getFive(patterns []string, nine string) string {
-	return find(patterns, func(p string, i int) bool { return !contains(p, patterns[0]) && contains(nine, p) })
-}
-
-func getTwo(patterns []string, three string, five string) string {
-	return find(patterns, func(p string, i int) bool { return len(p) == 5 && p != three && p != five })
-}
-
-func getSix(patterns []string, five string, nine string) string {
-	return find(patterns, func(p string, i int) bool { return len(p) == 6 && contains(p, five) && p != nine })
-}
-
-func getZero(patterns []string, six string, nine string) string {
-	return find(patterns, func(p string, i int) bool { return len(p) == 6 && p != six && p != nine })
-}
-
-func find(patterns []string, condition func(p string, i int) bool) string {
-	for i, p := range patterns {
-		if condition(p, i) {
+func find(patterns []string, condition func(p string) bool) string {
+	for _, p := range patterns {
+		if condition(p) {
 			return p
 		}
 	}
@@ -97,16 +71,12 @@ func find(patterns []string, condition func(p string, i int) bool) string {
 }
 
 func contains(a, b string) bool {
-	return len(remove(b, a)) == 0
-}
-
-func remove(a, b string) (result string) {
-	for _, x := range a {
-		if !strings.Contains(b, string(x)) {
-			result += string(x)
+	for _, x := range b {
+		if !strings.Contains(a, string(x)) {
+			return false
 		}
 	}
-	return
+	return true
 }
 
 func sortString(s string) string {
