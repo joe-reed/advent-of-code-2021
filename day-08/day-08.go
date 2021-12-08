@@ -33,20 +33,20 @@ func puzzle2(input []string) (result int) {
 		zero := find(patterns, func(p string) bool { return len(p) == 6 && p != six && p != nine })
 
 		numbers := map[string]int{
-			sortString(zero):  0,
-			sortString(one):   1,
-			sortString(two):   2,
-			sortString(three): 3,
-			sortString(four):  4,
-			sortString(five):  5,
-			sortString(six):   6,
-			sortString(seven): 7,
-			sortString(eight): 8,
-			sortString(nine):  9,
+			SortString(zero):  0,
+			SortString(one):   1,
+			SortString(two):   2,
+			SortString(three): 3,
+			SortString(four):  4,
+			SortString(five):  5,
+			SortString(six):   6,
+			SortString(seven): 7,
+			SortString(eight): 8,
+			SortString(nine):  9,
 		}
 
 		for i, v := range output {
-			result += numbers[sortString(v)] * int(math.Pow(10, 3-float64(i)))
+			result += numbers[SortString(v)] * int(math.Pow(10, 3-float64(i)))
 		}
 	}
 	return
@@ -77,10 +77,4 @@ func contains(a, b string) bool {
 		}
 	}
 	return true
-}
-
-func sortString(s string) string {
-	split := strings.Split(s, "")
-	sort.Strings(split)
-	return strings.Join(split, "")
 }

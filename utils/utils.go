@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -80,4 +81,10 @@ func MinInt(ints []int) int {
 		}
 	}
 	return min
+}
+
+func SortString(s string) string {
+	split := strings.Split(s, "")
+	sort.Strings(split)
+	return strings.Join(split, "")
 }
