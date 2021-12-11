@@ -17,20 +17,19 @@ func puzzle1(input []string) (flashCount int) {
 	return
 }
 
-func puzzle2(input []string) int {
+func puzzle2(input []string) (i int) {
 	grid := parseInput(input)
 	var flashers []Point
 
-	i := 0
-	for true {
+	for {
 		i++
 		grid, flashers = handleStep(grid)
 		if len(flashers) == len(grid)*len(grid[0]) {
-			return i
+			break
 		}
 	}
 
-	return 0
+	return
 }
 
 func parseInput(input []string) [][]int {
