@@ -88,13 +88,13 @@ type Board struct {
 }
 
 func (b *Board) contains(n string) bool {
-	err, _, _ := b.findLocation(n)
+	_, _, err := b.findLocation(n)
 
 	return err == nil
 }
 
 func (b *Board) mark(n string) {
-	_, x, y := b.findLocation(n)
+	x, y, _ := b.findLocation(n)
 
 	b.marks[y][x] = true
 }
@@ -129,16 +129,16 @@ func (b *Board) getUnmarkedNumberTotal() int {
 	return result
 }
 
-func (b *Board) findLocation(n string) (error, int, int) {
+func (b *Board) findLocation(n string) (int, int, error) {
 	for y, row := range b.rows {
 		for x, number := range row {
 			if n == number {
-				return nil, x, y
+				return x, y, nil
 			}
 		}
 	}
 
-	return errors.New("Number not found"), -1, -1
+	return -1, -1, errors.New("number not found")
 }
 
 func hasRowOfTrues(grid [][]bool) bool {
