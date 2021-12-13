@@ -31,12 +31,28 @@ func TestSolvePuzzle1(t *testing.T) {
 	fmt.Println("Puzzle 1:", puzzle1(string(file)))
 }
 
-func TestSolvePuzzle2(t *testing.T) {
-	fmt.Println("Test:")
-	testFile, _ := ioutil.ReadFile("./test-input-1.txt")
-	puzzle2(string(testFile))
+func TestPuzzle2(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{
+			"./test-input-1.txt",
+			"#####\n#...#\n#...#\n#...#\n#####\n",
+		},
+	}
 
-	fmt.Println("Puzzle:")
+	for _, test := range tests {
+		file, _ := ioutil.ReadFile(test.input)
+		a := puzzle2(string(file))
+		if a != test.expected {
+			t.Errorf("\nexpected:\n%s\nactual:\n%s", test.expected, a)
+		}
+	}
+}
+
+func TestSolvePuzzle2(t *testing.T) {
 	file, _ := ioutil.ReadFile("./input.txt")
-	puzzle2(string(file))
+	fmt.Println("Puzzle 2:")
+	fmt.Print(puzzle2(string(file)))
 }

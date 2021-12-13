@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 	. "utils"
@@ -12,7 +11,7 @@ func puzzle1(input string) int {
 
 	return len(paper.fold(folds[0]))
 }
-func puzzle2(input string) {
+func puzzle2(input string) (result string) {
 	paper, folds := parseInput(input)
 
 	for _, f := range folds {
@@ -35,17 +34,19 @@ func puzzle2(input string) {
 			foundDot := false
 			for _, dot := range paper {
 				if dot.x == i && dot.y == j {
-					fmt.Print("#")
+					result += "#"
 					foundDot = true
 					break
 				}
 			}
 			if !foundDot {
-				fmt.Print(".")
+				result += "."
 			}
 		}
-		fmt.Print("\n")
+		result += "\n"
 	}
+
+	return
 }
 
 func parseInput(input string) (paper Paper, folds []Fold) {
