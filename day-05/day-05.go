@@ -103,14 +103,12 @@ func filterOutDiagonals(lines []Line) (result []Line) {
 }
 
 type Line struct {
-	start Point
-	end   Point
-	curr  *Point
+	start, end Point
+	curr       *Point
 }
 
 type Point struct {
-	x int
-	y int
+	x, y int
 }
 
 func (line *Line) advance() Point {

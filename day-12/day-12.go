@@ -60,6 +60,5 @@ func getPaths(input []string) (paths []Path) {
 }
 
 type Path struct {
-	a string
-	b string
+	a, b string
 }

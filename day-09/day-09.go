@@ -95,8 +95,7 @@ func getLowPoints(floor [][]int) []Point {
 }
 
 type Point struct {
-	x int
-	y int
+	x, y int
 }
 
 type Basin []Point

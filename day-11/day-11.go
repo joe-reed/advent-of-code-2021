@@ -123,6 +123,5 @@ func containsPoint(points []Point, p Point) bool {
 }
 
 type Point struct {
-	x int
-	y int
+	x, y int
 }
