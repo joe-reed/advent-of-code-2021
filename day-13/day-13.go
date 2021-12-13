@@ -11,6 +11,7 @@ func puzzle1(input string) int {
 
 	return len(paper.fold(folds[0]))
 }
+
 func puzzle2(input string) (result string) {
 	paper, folds := parseInput(input)
 
@@ -18,8 +19,7 @@ func puzzle2(input string) (result string) {
 		paper = paper.fold(f)
 	}
 
-	maxX := 0
-	maxY := 0
+	maxX, maxY := 0, 0
 	for _, dot := range paper {
 		if dot.x > maxX {
 			maxX = dot.x
